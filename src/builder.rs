@@ -224,6 +224,17 @@ impl Builder {
     }
 
     #[inline]
+    pub fn build_fadd(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
+        self.build_fadd_with_name(lhs, rhs, "")
+    }
+
+    #[inline]
+    pub fn build_fadd_with_name(&self, lhs: LLVMValueRef, rhs: LLVMValueRef, name: &str) -> LLVMValueRef {
+        let val_name_ptr = CStringManager::new_cstring_as_ptr(name);
+        unsafe { LLVMBuildFAdd(self.llvm_builder, lhs, rhs, val_name_ptr) }
+    }
+
+    #[inline]
     pub fn build_sub(&self, lhs: LLVMValueRef, rhs: LLVMValueRef) -> LLVMValueRef {
         self.build_sub_with_name(lhs, rhs, "")
     }
